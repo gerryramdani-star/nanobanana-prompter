@@ -19,7 +19,7 @@ export const handler = async (event) => {
     }
 
     try {
-        const { prompt, style, font, lighting, ratio, language, userApiKey } = JSON.parse(event.body);
+        const { prompt, reference, style, font, lighting, ratio, language, userApiKey } = JSON.parse(event.body);
         
         let apiKey = userApiKey;
         if (!apiKey || apiKey.trim() === "") {
@@ -89,6 +89,13 @@ Convert user ideas into a sophisticated, highly detailed JSON Prompt.
 `;
 
         let constraints = "";
+        
+        // 1. Handle Reference Image Input
+        if (reference && reference.trim() !== "") {
+            constraints += `\n**REFERENCE IMAGE CONTEXT:**\nThe user has provided a description of a specific reference image/sketch: "${reference}".\nINSTRUCTION: You MUST incorporate the visual elements of this reference into the 'visual_elements' or 'text_integration_styling' section. Ensure the generated prompt reflects this reference.\n`;
+        }
+
+        // 2. Handle Other Constraints
         if (style || font || lighting || ratio || language) {
             constraints += "\n**CRITICAL USER OVERRIDES (YOU MUST FOLLOW THESE):**\n";
             if (style) constraints += `- Visual Style: Force the image style to be "${style}".\n`;
@@ -125,8 +132,8 @@ Convert user ideas into a sophisticated, highly detailed JSON Prompt.
             const payload = {
                 contents: [{ role: "user", parts: [{ text: finalPrompt }] }],
                 generationConfig: {
-                    temperature: 0.75, // Kreativitas Tinggi tapi Stabil
-                    maxOutputTokens: 8192, // Kapasitas Token Jumbo
+                    temperature: 0.75, 
+                    maxOutputTokens: 8192, 
                     responseMimeType: "application/json"
                 }
             };
