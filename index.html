@@ -46,17 +46,13 @@
             width: 20px; height: 20px; animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        /* Animasi Sukses Input */
         @keyframes pulse-green {
             0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
             70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
             100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
         .input-success {
-            border-color: #22c55e !important; /* Green-500 */
-            color: #4ade80 !important; /* Green-400 */
-            animation: pulse-green 1s;
+            border-color: #22c55e !important; color: #4ade80 !important; animation: pulse-green 1s;
         }
     </style>
 </head>
@@ -67,65 +63,39 @@
 
     <header class="w-full max-w-5xl mb-12 text-center relative z-10 flex flex-col items-center">
         <div class="inline-block glass-panel rounded-full px-5 py-1.5 mb-6">
-            <span class="text-yellow-400 text-xs sm:text-sm font-bold tracking-[0.2em]">GEN 3.2 // VISUAL FEEDBACK ✨</span>
+            <span class="text-yellow-400 text-xs sm:text-sm font-bold tracking-[0.2em]">GEN 3.4 // REFERENCE READY ✨</span>
         </div>
         <h1 class="text-4xl sm:text-7xl font-extrabold mb-4 tracking-tight">Nano Banana <br class="sm:hidden"><span class="gradient-text">Prompt Chef</span></h1>
         
-        <!-- API KEY INPUT SECTION -->
         <div class="mt-8 w-full max-w-lg relative group">
             <div class="flex justify-between items-end mb-2 px-1">
                 <label for="apiKeyInput" class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 0 0 0-2z" clip-rule="evenodd" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 0 0 0-2z" clip-rule="evenodd" /></svg>
                     Google Gemini API Key
                 </label>
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-[10px] text-blue-400 hover:text-blue-300 underline transition flex items-center gap-1">
-                    Dapatkan Key Gratis
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </a>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-[10px] text-blue-400 hover:text-blue-300 underline transition flex items-center gap-1">Dapatkan Key Gratis<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a>
             </div>
-
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <!-- Icon Kunci akan berubah warna -->
-                    <svg id="keyIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                    </svg>
+                    <svg id="keyIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
                 </div>
-                <input 
-                    type="password" 
-                    id="apiKeyInput" 
-                    class="block w-full pl-10 pr-10 py-3 border border-white/10 rounded-xl leading-5 bg-black/40 text-gray-300 placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm transition-all shadow-inner" 
-                    placeholder="Tempel API Key Anda di sini..."
-                >
-                <!-- Indikator Centang Hijau (Hidden by Default) -->
+                <input type="password" id="apiKeyInput" class="block w-full pl-10 pr-10 py-3 border border-white/10 rounded-xl leading-5 bg-black/40 text-gray-300 placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm transition-all shadow-inner" placeholder="Tempel API Key Anda di sini...">
                 <div id="successIndicator" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none opacity-0 transition-opacity duration-300 transform scale-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
                 </div>
             </div>
-
             <div class="mt-3 flex items-start gap-3 bg-white/5 border border-white/5 rounded-lg p-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p id="keyStatusText" class="text-[10px] text-gray-400 leading-relaxed transition-colors duration-300">
-                    Aplikasi ini memerlukan API Key untuk berfungsi. Key Anda hanya disimpan secara lokal di browser (Local Storage).
-                </p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <p id="keyStatusText" class="text-[10px] text-gray-400 leading-relaxed transition-colors duration-300">Aplikasi ini memerlukan API Key untuk berfungsi. Key Anda hanya disimpan secara lokal di browser (Local Storage).</p>
             </div>
         </div>
     </header>
 
     <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
-        
         <!-- Input Section -->
         <section class="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-8 h-fit transition-all hover:border-yellow-500/30">
             <h2 class="text-xl font-bold mb-6 flex items-center gap-3 text-yellow-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
                 Bahan Baku (Input)
             </h2>
             
@@ -136,12 +106,22 @@
                 </div>
 
                 <div class="relative group">
-                    <textarea id="userInput" rows="6" class="w-full bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all resize-none outline-none shadow-inner text-sm sm:text-base leading-relaxed" placeholder="Ketik ide mentahmu di sini, atau pilih template di atas..." required></textarea>
-                    <button type="button" onclick="document.getElementById('userInput').value = '';" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors opacity-0 group-hover:opacity-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
+                    <textarea id="userInput" rows="5" class="w-full bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all resize-none outline-none shadow-inner text-sm sm:text-base leading-relaxed" placeholder="Ketik ide mentahmu di sini, atau pilih template di atas..." required></textarea>
+                    <button type="button" onclick="document.getElementById('userInput').value = '';" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors opacity-0 group-hover:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
+                </div>
+
+                <!-- NEW: REFERENCE IMAGE INPUT -->
+                <div class="relative group">
+                    <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider pl-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        Deskripsi Gambar Referensi (Opsional)
+                    </label>
+                    <textarea 
+                        id="referenceInput" 
+                        rows="2" 
+                        class="w-full bg-blue-900/10 backdrop-blur-sm border border-blue-500/20 rounded-xl p-4 text-gray-300 placeholder-blue-300/30 focus:ring-1 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all resize-none outline-none shadow-inner text-xs sm:text-sm leading-relaxed"
+                        placeholder="Contoh: Saya punya logo kopi berbentuk cangkir emas, background putih polos. Tolong tempelkan logo ini di botol..."
+                    ></textarea>
                 </div>
 
                 <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
@@ -228,55 +208,43 @@
 
         const templateContainer = document.getElementById('templateContainer');
         const userInput = document.getElementById('userInput');
+        const referenceInput = document.getElementById('referenceInput');
         const apiKeyInput = document.getElementById('apiKeyInput');
-        
-        // Element Visual Feedback
         const keyIcon = document.getElementById('keyIcon');
         const successIndicator = document.getElementById('successIndicator');
         const keyStatusText = document.getElementById('keyStatusText');
 
-        // FUNGSI UPDATE UI SAAT KEY ADA
         function updateKeyUI(hasKey) {
             if (hasKey) {
-                // Tampilan Sukses
                 apiKeyInput.classList.add('input-success', 'bg-green-900/20');
                 apiKeyInput.classList.remove('bg-black/40', 'text-gray-300');
                 apiKeyInput.classList.add('text-green-300');
-                
                 keyIcon.classList.add('text-green-500');
                 keyIcon.classList.remove('text-gray-500');
-                
                 successIndicator.classList.remove('opacity-0', 'scale-50');
                 successIndicator.classList.add('opacity-100', 'scale-100');
-                
                 keyStatusText.innerHTML = '<span class="text-green-400 font-bold">API Key Tersimpan & Aktif.</span> Aman di Local Storage.';
             } else {
-                // Tampilan Kosong/Default
                 apiKeyInput.classList.remove('input-success', 'bg-green-900/20', 'text-green-300');
                 apiKeyInput.classList.add('bg-black/40', 'text-gray-300');
-                
                 keyIcon.classList.remove('text-green-500');
                 keyIcon.classList.add('text-gray-500');
-                
                 successIndicator.classList.add('opacity-0', 'scale-50');
                 successIndicator.classList.remove('opacity-100', 'scale-100');
-                
                 keyStatusText.innerHTML = 'Aplikasi ini memerlukan API Key untuk berfungsi. Key Anda hanya disimpan secara lokal di browser (Local Storage).';
             }
         }
 
-        // LOAD API KEY
         if(localStorage.getItem('geminiApiKey')) {
             const savedKey = localStorage.getItem('geminiApiKey');
             apiKeyInput.value = savedKey;
             updateKeyUI(savedKey.length > 10);
         }
 
-        // INPUT EVENT LISTENER
         apiKeyInput.addEventListener('input', (e) => {
             const key = e.target.value.trim();
             localStorage.setItem('geminiApiKey', key);
-            updateKeyUI(key.length > 10); // Anggap valid kalau > 10 karakter
+            updateKeyUI(key.length > 10);
         });
 
         templates.forEach(t => {
@@ -305,6 +273,7 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const prompt = document.getElementById('userInput').value;
+            const reference = document.getElementById('referenceInput').value;
             const apiKey = apiKeyInput.value.trim();
             
             const style = document.getElementById('optStyle').value;
@@ -324,6 +293,7 @@
                     method: 'POST',
                     body: JSON.stringify({ 
                         prompt, 
+                        reference,
                         style, 
                         font, 
                         lighting, 
@@ -334,6 +304,10 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
 
+                if (!response.ok) {
+                    throw new Error(`Server Error: ${response.status} ${response.statusText}. Pastikan file 'netlify/functions/generate.js' sudah terdeploy.`);
+                }
+
                 const data = await response.json();
                 if (data.error) throw new Error(data.error);
 
@@ -343,7 +317,7 @@
                 addToHistory(prompt);
 
             } catch (error) {
-                jsonOutput.innerText = `// ERROR: ${error.message}\n// Coba cek API Key Anda atau koneksi internet.`;
+                jsonOutput.innerText = `// ERROR: ${error.message}\n// Coba cek koneksi atau API Key Anda.`;
             } finally {
                 setLoading(false);
                 jsonOutput.classList.remove('opacity-50', 'animate-pulse');
