@@ -1,7 +1,7 @@
 // netlify/functions/generate.js
 
 export const handler = async (event) => {
-    // 1. Handle Preflight Request (CORS) - Agar bisa diakses dari browser
+    // 1. Handle Preflight Request (CORS)
     if (event.httpMethod === 'OPTIONS') {
         return {
             statusCode: 200,
@@ -19,28 +19,24 @@ export const handler = async (event) => {
     }
 
     try {
-        // AMBIL DATA DARI FRONTEND (Termasuk userApiKey)
         const { prompt, style, font, lighting, ratio, language, userApiKey } = JSON.parse(event.body);
         
-        // LOGIKA PRIORITAS API KEY (Hybrid)
-        // 1. Cek apakah User menginput kunci manual? Pakai itu.
-        // 2. Jika tidak, cek apakah di Server Netlify ada kunci? Pakai itu.
         let apiKey = userApiKey;
         if (!apiKey || apiKey.trim() === "") {
             apiKey = process.env.GEMINI_API_KEY;
         }
 
-        // Validasi Terakhir
         if (!apiKey) {
             console.error("FATAL: No API KEY found.");
             throw new Error("API Key tidak ditemukan. Mohon masukkan API Key Anda di kolom input atas.");
         }
 
-        // SYSTEM PROMPT: EXTREME DIRECTOR MODE
+        // SYSTEM PROMPT: EXTREME DIRECTOR MODE + DYNAMIC TYPOGRAPHY
         const systemPrompt = `
 **ROLE:**
 You are a World-Class Commercial Creative Director specializing in High-Impact Advertising & Nano Banana Pro (Gemini Image 3).
-Your goal is "Dynamic", "Explosive", and "Scroll-Stopping" visuals, BUT you must maintain PERFECT JSON SYNTAX.
+Your goal is "Dynamic", "Explosive", and "Scroll-Stopping" visuals. 
+**NEVER be boring. NEVER be flat.**
 
 **TASK:**
 Convert user ideas into a sophisticated, highly detailed JSON Prompt. 
@@ -74,8 +70,8 @@ Convert user ideas into a sophisticated, highly detailed JSON Prompt.
     "text_integration_styling": {
       "headline_style": {
         "font": "Font vibe description",
-        "placement": "CRITICAL: The text MUST NOT be flat. Describe rotation, perspective skew, or curvature to match the object. Use 'OCCLUSION' (e.g., 'The burger slightly covers the letter B').",
-        "material_and_lighting": "Define text material (e.g., 'Neon tube', 'Gold', 'Ice')."
+        "placement": "CRITICAL: The text MUST NOT be flat. USE EXTREME PERSPECTIVE. Instructions: 1. WARPING (Curve the text around the object). 2. ZOOM (Make one word huge and another small). 3. TILT (Follow the camera angle). 4. OCCLUSION (The object must block parts of the text).",
+        "material_and_lighting": "Define text material (e.g., 'Neon tube', 'Gold', 'Ice', 'Clouds')."
       },
       "cta_style": "Describe the button as a physical object (e.g., 'Glass pill', 'Metal tag')."
     },
@@ -92,7 +88,6 @@ Convert user ideas into a sophisticated, highly detailed JSON Prompt.
 }
 `;
 
-        // Constraint Block (Pilihan User)
         let constraints = "";
         if (style || font || lighting || ratio || language) {
             constraints += "\n**CRITICAL USER OVERRIDES (YOU MUST FOLLOW THESE):**\n";
@@ -103,7 +98,6 @@ Convert user ideas into a sophisticated, highly detailed JSON Prompt.
             if (language) constraints += `- Text Language: Ensure spelling of text content is strictly in "${language}".\n`;
         }
 
-        // Fungsi Auto-Discovery Model (Agar kompatibel dengan semua akun)
         async function getAvailableModel() {
             const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
             const response = await fetch(listUrl);
@@ -122,7 +116,6 @@ Convert user ideas into a sophisticated, highly detailed JSON Prompt.
             return selected.name.replace('models/', '');
         }
 
-        // Fungsi Eksekusi
         async function runInference() {
             const modelName = await getAvailableModel();
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
@@ -156,7 +149,6 @@ Convert user ideas into a sophisticated, highly detailed JSON Prompt.
         // --- JSON CLEANING LOGIC (SMART CLEANER) ---
         let cleanJson = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
         
-        // Cari kurung kurawal terluar saja
         const firstBrace = cleanJson.indexOf('{');
         const lastBrace = cleanJson.lastIndexOf('}');
         
@@ -166,12 +158,10 @@ Convert user ideas into a sophisticated, highly detailed JSON Prompt.
         
         let jsonResult;
         try {
-            // Percobaan 1: Strict Parse
             jsonResult = JSON.parse(cleanJson);
         } catch (e) {
             console.warn("Standard JSON Parse failed, attempting Loose Parse...");
             try {
-                // Percobaan 2: Loose Parse (Penyelamat jika ada koma berlebih)
                 jsonResult = (new Function(`return ${cleanJson}`))();
             } catch (e2) {
                 console.error("All parsing failed.", e2);
