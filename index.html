@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nano Banana Prompt Chef 🍌</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Space Grotesk', sans-serif;
+            background: 
+                radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(251, 191, 36, 0.2) 0px, transparent 50%),
+                linear-gradient(to bottom right, #111827, #000000);
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.02);
+        }
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23fbbf24' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            -webkit-appearance: none; appearance: none;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(251, 191, 36, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(251, 191, 36, 0.6); }
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #f59e0b;
+            border-radius: 50%;
+            width: 20px; height: 20px; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Animasi Sukses Input */
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .input-success {
+            border-color: #22c55e !important; /* Green-500 */
+            color: #4ade80 !important; /* Green-400 */
+            animation: pulse-green 1s;
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen flex flex-col items-center p-4 sm:p-8 overflow-x-hidden relative">
+    
+    <div class="fixed top-20 -left-20 w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
+    <div class="fixed bottom-20 -right-20 w-80 h-80 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style="animation-delay: 2s;"></div>
+
+    <header class="w-full max-w-5xl mb-12 text-center relative z-10 flex flex-col items-center">
+        <div class="inline-block glass-panel rounded-full px-5 py-1.5 mb-6">
+            <span class="text-yellow-400 text-xs sm:text-sm font-bold tracking-[0.2em]">GEN 3.2 // VISUAL FEEDBACK ✨</span>
+        </div>
+        <h1 class="text-4xl sm:text-7xl font-extrabold mb-4 tracking-tight">Nano Banana <br class="sm:hidden"><span class="gradient-text">Prompt Chef</span></h1>
+        
+        <!-- API KEY INPUT SECTION -->
+        <div class="mt-8 w-full max-w-lg relative group">
+            <div class="flex justify-between items-end mb-2 px-1">
+                <label for="apiKeyInput" class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 0 0 0-2z" clip-rule="evenodd" />
+                    </svg>
+                    Google Gemini API Key
+                </label>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-[10px] text-blue-400 hover:text-blue-300 underline transition flex items-center gap-1">
+                    Dapatkan Key Gratis
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+            </div>
+
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <!-- Icon Kunci akan berubah warna -->
+                    <svg id="keyIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                    </svg>
+                </div>
+                <input 
+                    type="password" 
+                    id="apiKeyInput" 
+                    class="block w-full pl-10 pr-10 py-3 border border-white/10 rounded-xl leading-5 bg-black/40 text-gray-300 placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm transition-all shadow-inner" 
+                    placeholder="Tempel API Key Anda di sini..."
+                >
+                <!-- Indikator Centang Hijau (Hidden by Default) -->
+                <div id="successIndicator" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none opacity-0 transition-opacity duration-300 transform scale-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="mt-3 flex items-start gap-3 bg-white/5 border border-white/5 rounded-lg p-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p id="keyStatusText" class="text-[10px] text-gray-400 leading-relaxed transition-colors duration-300">
+                    Aplikasi ini memerlukan API Key untuk berfungsi. Key Anda hanya disimpan secara lokal di browser (Local Storage).
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+        
+        <!-- Input Section -->
+        <section class="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-8 h-fit transition-all hover:border-yellow-500/30">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-3 text-yellow-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                Bahan Baku (Input)
+            </h2>
+            
+            <form id="promptForm" class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider pl-1">Mulai dengan Template</label>
+                    <div id="templateContainer" class="flex flex-wrap gap-2.5"></div>
+                </div>
+
+                <div class="relative group">
+                    <textarea id="userInput" rows="6" class="w-full bg-black/30 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all resize-none outline-none shadow-inner text-sm sm:text-base leading-relaxed" placeholder="Ketik ide mentahmu di sini, atau pilih template di atas..." required></textarea>
+                    <button type="button" onclick="document.getElementById('userInput').value = '';" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors opacity-0 group-hover:opacity-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
+                    <label class="block text-xs font-bold text-yellow-500 mb-4 uppercase tracking-wider flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                        Bumbu Tambahan (Opsional)
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1"><label class="text-[10px] uppercase text-gray-400 font-bold tracking-wide pl-1">Visual Style</label><select id="optStyle" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:ring-1 focus:ring-yellow-500 outline-none"><option value="">Biarkan AI Memilih (Auto)</option><option value="Cinematic">Cinematic</option><option value="Photorealistic">Photorealistic</option><option value="3D Render">3D Render (C4D)</option><option value="Anime / Illustration">Anime / Illustration</option><option value="Minimalist">Minimalist</option><option value="Cyberpunk">Cyberpunk / Futuristic</option><option value="Vintage / Retro">Vintage / Retro</option><option value="Surreal">Surreal / Dreamy</option><option value="Oil Painting">Oil Painting</option><option value="Sketch">Sketch / Blueprint</option></select></div>
+                        <div class="space-y-1"><label class="text-[10px] uppercase text-gray-400 font-bold tracking-wide pl-1">Font Style</label><select id="optFont" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:ring-1 focus:ring-yellow-500 outline-none"><option value="">Biarkan AI Memilih (Auto)</option><option value="Modern Sans-Serif">Modern Sans-Serif</option><option value="Elegant Serif">Elegant Serif</option><option value="Handwritten">Handwritten / Script</option><option value="Neon Glowing">Neon Glowing</option><option value="Metallic 3D">Metallic 3D</option><option value="Grunge">Distressed / Grunge</option><option value="Vintage Label">Vintage Label</option><option value="Bubble">Bubble / Playful</option><option value="Glitch">Glitch / Digital</option><option value="Minimalist Thin">Minimalist Thin</option></select></div>
+                        <div class="space-y-1"><label class="text-[10px] uppercase text-gray-400 font-bold tracking-wide pl-1">Lighting & Mood</label><select id="optLighting" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:ring-1 focus:ring-yellow-500 outline-none"><option value="">Biarkan AI Memilih (Auto)</option><option value="Golden Hour">Golden Hour (Warm)</option><option value="Dark & Moody">Dark & Moody</option><option value="Studio Bright">Studio Bright (Clean)</option><option value="Neon Night">Neon Night</option><option value="Natural Window">Natural Window Light</option><option value="Dramatic Rim">Dramatic Rim Light</option><option value="Soft Pastel">Soft Pastel / Dreamy</option><option value="High Contrast">High Contrast / Noir</option><option value="Underwater">Underwater / Aqua</option><option value="Warm Fire">Warm Fire / Candle</option></select></div>
+                        <div class="space-y-1"><label class="text-[10px] uppercase text-gray-400 font-bold tracking-wide pl-1">Aspect Ratio</label><select id="optRatio" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:ring-1 focus:ring-yellow-500 outline-none"><option value="">Bebas (Auto)</option><option value="1:1">1:1 (Square - IG Feed)</option><option value="16:9">16:9 (Landscape - YouTube)</option><option value="9:16">9:16 (Portrait - TikTok/Story)</option><option value="4:5">4:5 (Portrait - IG Feed)</option><option value="4:3">4:3 (Classic TV - Retro)</option><option value="3:4">3:4 (Portrait - Poster)</option></select></div>
+                        <div class="space-y-1 sm:col-span-2"><label class="text-[10px] uppercase text-gray-400 font-bold tracking-wide pl-1">Bahasa Teks (Spelling)</label><select id="optLanguage" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:ring-1 focus:ring-yellow-500 outline-none"><option value="">Sesuai Input User (Auto)</option><option value="Bahasa Indonesia">Bahasa Indonesia</option><option value="English">English (Inggris)</option><option value="Javanese">Javanese (Jawa)</option><option value="Japanese">Japanese (Jepang)</option><option value="Korean">Korean (Korea)</option><option value="Arabic">Arabic (Arab)</option><option value="Mandarin">Mandarin (China)</option><option value="French">French (Prancis)</option><option value="Spanish">Spanish (Spanyol)</option><option value="German">German (Jerman)</option></select></div>
+                    </div>
+                </div>
+
+                <button type="submit" id="generateBtn" class="w-full bg-gradient-to-r from-yellow-500 via-yellow-600 to-orange-600 hover:from-yellow-400 hover:to-orange-500 text-white font-bold py-4 rounded-2xl shadow-lg shadow-yellow-900/30 transform transition hover:scale-[1.01] active:scale-[0.99] flex justify-center items-center gap-3 border border-yellow-400/20 group">
+                    <span id="btnText" class="tracking-wide group-hover:tracking-wider transition-all">RACIK PROMPT SEKARANG ⚡</span>
+                    <div id="loadingSpinner" class="loader hidden"></div>
+                </button>
+            </form>
+
+            <div class="mt-10 pt-6 border-t border-white/10">
+                <div class="flex justify-between items-center mb-4 px-1">
+                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Riwayat Masakan Terakhir</h3>
+                    <button onclick="clearHistory()" class="text-[10px] text-red-400 hover:text-red-300 font-bold tracking-wide uppercase flex items-center gap-1 hover:bg-red-500/10 px-2 py-1 rounded transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                        Hapus Semua
+                    </button>
+                </div>
+                <div id="historyList" class="space-y-3 max-h-64 overflow-y-auto pr-2">
+                    <p class="text-gray-500 text-sm italic pl-1">Belum ada riwayat pesanan.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Output Section -->
+        <section class="lg:col-span-5 glass-panel rounded-3xl p-6 sm:p-8 relative min-h-[500px] lg:h-auto flex flex-col transition-all hover:border-green-400/30 group/output">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-3 text-green-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                Hasil Sajian (JSON)
+            </h2>
+            <div class="relative flex flex-col flex-grow bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-inner">
+                <div class="flex justify-between items-center px-4 py-3 bg-white/5 border-b border-white/5 backdrop-blur-sm">
+                    <div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div><span class="ml-2 text-xs text-gray-500 font-mono tracking-wider">JSON PREVIEW</span></div>
+                    <button onclick="copyToClipboard()" class="bg-white/5 hover:bg-white/10 text-green-400 hover:text-green-300 text-xs font-bold px-3 py-1.5 rounded-lg transition-all duration-200 border border-white/5 flex items-center gap-2 group/btn">
+                        <span class="opacity-70 group-hover/btn:opacity-100">Salin Kode</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-6 4h6m-6 4h6" /></svg>
+                    </button>
+                </div>
+                <pre id="jsonOutput" class="w-full h-full p-6 overflow-auto text-xs sm:text-sm font-mono text-green-300 leading-relaxed whitespace-pre-wrap outline-none" spellcheck="false">
+// JSON Prompt siap saji akan muncul di sini.
+// Silakan masukkan ide liar Anda di kolom sebelah kiri.
+// ---
+// Menunggu pesanan... 🍌
+                </pre>
+            </div>
+            <p class="text-xs text-gray-400 mt-4 text-center font-medium">Tips Pro: Salin kode di atas langsung ke Nano Banana Pro (Gemini Image Model).</p>
+        </section>
+    </main>
+
+    <footer class="mt-16 mb-4 text-center relative z-10 opacity-70 hover:opacity-100 transition-opacity">
+        <p class="text-xs sm:text-sm text-gray-400 font-medium tracking-wide">Crafted with <span class="text-red-500 animate-pulse">❤️</span> by <span class="text-yellow-500 font-bold">Om Ger</span> | <span class="text-blue-400 font-bold">Ai-Labs</span></p>
+    </footer>
+
+    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 glass-panel bg-green-500/20 border-green-500/30 text-green-100 px-6 py-3 rounded-full shadow-2xl transition-all duration-500 translate-y-24 opacity-0 font-semibold z-50 backdrop-blur-xl flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-300" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+        JSON Berhasil Disalin!
+    </div>
+
+    <script>
+        const templates = [
+            { icon: "🍔", label: "Iklan Kuliner", prompt: "Foto komersial close-up burger premium. Roti bun mengkilap, keju meleleh tumpah, daging tebal berair (juicy). Ada uap panas mengepul. Background gelap elegan. Teks 'JUARA RASA' di belakang burger dengan efek neon oranye." },
+            { icon: "🎬", label: "Poster Film", prompt: "Poster film aksi judul 'JAKARTA UNDERCOVER'. Suasana hujan malam hari di jalanan kota dengan lampu neon cyber-noir. Karakter utama siluet misterius memakai hoodie. Teks judul besar font metalik kotor (gritty) di bagian atas." },
+            { icon: "👟", label: "Produk 3D", prompt: "Visualisasi 3D futuristik sepatu sneakers melayang. Sepatu terbuat dari material transparan dan sirkuit emas bercahaya. Background laboratorium putih bersih. Teks 'FUTURE STEP' melayang dengan gaya hologram biru." },
+            { icon: "👗", label: "Fashion", prompt: "Fotografi fashion editorial high-end. Model wanita memakai gaun yang terbuat dari daur ulang plastik tapi terlihat mewah (avant-garde). Lokasi di gurun pasir saat sunset. Pencahayaan dramatis. Teks elegan 'ECO CHIC' di pojok bawah." },
+            { icon: "☕", label: "UMKM Kopi", prompt: "Iklan estetik Kopi Susu Gula Aren botolan. Botol berembun dingin dikelilingi biji kopi dan gula aren cair yang tumpah artistik. Cahaya pagi masuk dari jendela (window light). Nuansa hangat dan homey. Teks 'SEMANGAT PAGI' tulisan tangan kapur." },
+            { icon: "📱", label: "Gadget Futuristik", prompt: "Visualisasi produk smartphone konsep tahun 2050. Bodi transparan dengan sirkuit menyala internal. Layar menampilkan antarmuka hologram 3D melayang. Background ruang server cyber. Teks 'NEXT GEN' gaya digital glitch." },
+            { icon: "🏠", label: "Interior Japandi", prompt: "Fotografi interior ruang tamu gaya Japandi (Jepang-Scandinavia). Cahaya matahari sore masuk lembut (golden hour) menciptakan bayangan estetis. Furniture kayu oak muda, tanaman monstera, dan dinding tekstur beton halus. Suasana tenang dan homey." },
+            { icon: "🎮", label: "Karakter Game", prompt: "Desain karakter game RPG fantasi. Seorang Samurai Cyberpunk dengan armor hitam matte dan aksen neon ungu. Memegang katana bercahaya. Latar belakang kota futuristik hujan di malam hari. Detail tekstur goresan pada armor." },
+            { icon: "✨", label: "Skincare Glow", prompt: "Iklan produk serum wajah botol kaca pipet. Botol diletakkan di atas permukaan air yang tenang dengan riak halus. Refleksi sempurna. Bunga lily putih dan batu alam sebagai dekorasi. Pencahayaan high-key terang dan bersih (clean look). Teks 'PURE GLOW' font serif tipis elegan." },
+            { icon: "🐋", label: "Seni Surealis", prompt: "Karya seni digital surealis. Seekor paus raksasa berenang melayang di langit malam berbintang di atas kota metropolitan yang bercahaya. Awan-awan berbentuk ombak laut. Palet warna biru tua, ungu, dan emas. Suasana magis dan dreamy." }
+        ];
+
+        const templateContainer = document.getElementById('templateContainer');
+        const userInput = document.getElementById('userInput');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        
+        // Element Visual Feedback
+        const keyIcon = document.getElementById('keyIcon');
+        const successIndicator = document.getElementById('successIndicator');
+        const keyStatusText = document.getElementById('keyStatusText');
+
+        // FUNGSI UPDATE UI SAAT KEY ADA
+        function updateKeyUI(hasKey) {
+            if (hasKey) {
+                // Tampilan Sukses
+                apiKeyInput.classList.add('input-success', 'bg-green-900/20');
+                apiKeyInput.classList.remove('bg-black/40', 'text-gray-300');
+                apiKeyInput.classList.add('text-green-300');
+                
+                keyIcon.classList.add('text-green-500');
+                keyIcon.classList.remove('text-gray-500');
+                
+                successIndicator.classList.remove('opacity-0', 'scale-50');
+                successIndicator.classList.add('opacity-100', 'scale-100');
+                
+                keyStatusText.innerHTML = '<span class="text-green-400 font-bold">API Key Tersimpan & Aktif.</span> Aman di Local Storage.';
+            } else {
+                // Tampilan Kosong/Default
+                apiKeyInput.classList.remove('input-success', 'bg-green-900/20', 'text-green-300');
+                apiKeyInput.classList.add('bg-black/40', 'text-gray-300');
+                
+                keyIcon.classList.remove('text-green-500');
+                keyIcon.classList.add('text-gray-500');
+                
+                successIndicator.classList.add('opacity-0', 'scale-50');
+                successIndicator.classList.remove('opacity-100', 'scale-100');
+                
+                keyStatusText.innerHTML = 'Aplikasi ini memerlukan API Key untuk berfungsi. Key Anda hanya disimpan secara lokal di browser (Local Storage).';
+            }
+        }
+
+        // LOAD API KEY
+        if(localStorage.getItem('geminiApiKey')) {
+            const savedKey = localStorage.getItem('geminiApiKey');
+            apiKeyInput.value = savedKey;
+            updateKeyUI(savedKey.length > 10);
+        }
+
+        // INPUT EVENT LISTENER
+        apiKeyInput.addEventListener('input', (e) => {
+            const key = e.target.value.trim();
+            localStorage.setItem('geminiApiKey', key);
+            updateKeyUI(key.length > 10); // Anggap valid kalau > 10 karakter
+        });
+
+        templates.forEach(t => {
+            const btn = document.createElement('button');
+            btn.type = "button";
+            btn.className = "flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-3 py-2 text-xs text-gray-300 hover:text-yellow-400 transition-all backdrop-blur-sm group mb-1";
+            btn.innerHTML = `<span class="grayscale group-hover:grayscale-0 transition text-base">${t.icon}</span> ${t.label}`;
+            btn.onclick = () => {
+                userInput.value = t.prompt;
+                userInput.classList.add('ring-2', 'ring-yellow-500');
+                setTimeout(() => userInput.classList.remove('ring-2', 'ring-yellow-500'), 300);
+            };
+            templateContainer.appendChild(btn);
+        });
+
+        const form = document.getElementById('promptForm');
+        const generateBtn = document.getElementById('generateBtn');
+        const btnText = document.getElementById('btnText');
+        const spinner = document.getElementById('loadingSpinner');
+        const jsonOutput = document.getElementById('jsonOutput');
+        const historyList = document.getElementById('historyList');
+
+        let globalHistory = [];
+        loadHistory();
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const prompt = document.getElementById('userInput').value;
+            const apiKey = apiKeyInput.value.trim();
+            
+            const style = document.getElementById('optStyle').value;
+            const font = document.getElementById('optFont').value;
+            const lighting = document.getElementById('optLighting').value;
+            const ratio = document.getElementById('optRatio').value;
+            const language = document.getElementById('optLanguage').value;
+
+            if (!prompt) return;
+
+            setLoading(true);
+            jsonOutput.innerText = "// Sedang meracik prompt di dapur AI...\n// Mohon tunggu sebentar.";
+            jsonOutput.classList.add('opacity-50', 'animate-pulse');
+
+            try {
+                const response = await fetch('/.netlify/functions/generate', {
+                    method: 'POST',
+                    body: JSON.stringify({ 
+                        prompt, 
+                        style, 
+                        font, 
+                        lighting, 
+                        ratio, 
+                        language,
+                        userApiKey: apiKey 
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                const formattedJSON = JSON.stringify(data.result, null, 2);
+                jsonOutput.innerText = formattedJSON;
+                jsonOutput.scrollTop = 0;
+                addToHistory(prompt);
+
+            } catch (error) {
+                jsonOutput.innerText = `// ERROR: ${error.message}\n// Coba cek API Key Anda atau koneksi internet.`;
+            } finally {
+                setLoading(false);
+                jsonOutput.classList.remove('opacity-50', 'animate-pulse');
+            }
+        });
+
+        function setLoading(isLoading) {
+            generateBtn.disabled = isLoading;
+            if (isLoading) {
+                btnText.innerText = "SEDANG MERACIK...";
+                spinner.classList.remove('hidden');
+                generateBtn.classList.add('opacity-75', 'cursor-not-allowed', 'brightness-75');
+            } else {
+                btnText.innerText = "RACIK PROMPT SEKARANG ⚡";
+                spinner.classList.add('hidden');
+                generateBtn.classList.remove('opacity-75', 'cursor-not-allowed', 'brightness-75');
+            }
+        }
+
+        function copyToClipboard() {
+            const text = jsonOutput.innerText;
+            if (text.startsWith('//')) return;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-24', 'opacity-0');
+                setTimeout(() => { toast.classList.add('translate-y-24', 'opacity-0'); }, 2500);
+            });
+        }
+
+        function loadHistory() {
+            globalHistory = JSON.parse(localStorage.getItem('promptHistory') || '[]');
+            renderHistory();
+        }
+
+        function addToHistory(input) {
+            globalHistory.unshift({ input: input, timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
+            if (globalHistory.length > 10) globalHistory.pop();
+            localStorage.setItem('promptHistory', JSON.stringify(globalHistory));
+            renderHistory();
+        }
+
+        function clearHistory() {
+            if(confirm("Yakin ingin menghapus semua riwayat?")) {
+                globalHistory = [];
+                localStorage.removeItem('promptHistory');
+                renderHistory();
+            }
+        }
+
+        window.restoreHistory = function(index) {
+            if (globalHistory[index]) {
+                const item = globalHistory[index];
+                const inputField = document.getElementById('userInput');
+                inputField.value = item.input;
+                inputField.classList.add('ring-2', 'ring-yellow-500', 'bg-yellow-500/10');
+                setTimeout(() => {
+                    inputField.classList.remove('ring-2', 'ring-yellow-500', 'bg-yellow-500/10');
+                }, 300);
+            }
+        };
+
+        function renderHistory() {
+            if (globalHistory.length === 0) {
+                historyList.innerHTML = '<p class="text-gray-500 text-sm italic pl-1">Belum ada riwayat pesanan.</p>';
+                return;
+            }
+            historyList.innerHTML = globalHistory.map((item, index) => `
+                <div onclick="restoreHistory(${index})" class="glass-panel bg-white/5 p-3 rounded-xl cursor-pointer hover:bg-white/10 transition-all group relative">
+                    <div class="flex justify-between items-center mb-1">
+                        <p class="text-xs text-yellow-500/80 font-mono group-hover:text-yellow-400">${item.timestamp}</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-500 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                    </div>
+                    <p class="text-xs text-gray-300 line-clamp-2 group-hover:text-white leading-relaxed">${item.input.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
