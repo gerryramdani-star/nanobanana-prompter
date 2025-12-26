@@ -58,13 +58,50 @@
     </style>
 </head>
 <body class="text-gray-100 min-h-screen flex flex-col items-center p-4 sm:p-8 overflow-x-hidden relative">
+
+    <!-- LOGIN OVERLAY SECTION -->
+<div id="loginOverlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] transition-all duration-700">
+    <!-- Background Decor -->
+    <div class="absolute top-1/4 -left-20 w-64 h-64 bg-yellow-600/20 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
+
+    <div class="glass-panel p-8 sm:p-10 rounded-3xl w-full max-w-sm mx-4 relative border border-white/10 shadow-2xl shadow-yellow-500/10">
+        <div class="text-center mb-8">
+            <span class="text-4xl">🍌</span>
+            <h2 class="text-2xl font-bold text-white mt-4">Restricted Access</h2>
+            <p class="text-xs text-gray-400 tracking-widest uppercase mt-2">Nano Banana Chef</p>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <input type="text" id="usernameInput" 
+                    class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition text-sm"
+                    placeholder="Username">
+            </div>
+            <div>
+                <input type="password" id="passwordInput" 
+                    class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none transition text-sm"
+                    placeholder="Password">
+            </div>
+            
+            <button onclick="attemptLogin()" 
+                class="w-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 text-white font-bold py-3 rounded-xl shadow-lg transform transition active:scale-95 text-sm tracking-wide mt-2">
+                MASUK DAPUR
+            </button>
+            
+            <p id="loginError" class="text-red-400 text-xs text-center mt-2 hidden animate-pulse">
+                Username atau Password salah!
+            </p>
+        </div>
+    </div>
+</div>
     
     <div class="fixed top-20 -left-20 w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
     <div class="fixed bottom-20 -right-20 w-80 h-80 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style="animation-delay: 2s;"></div>
 
     <header class="w-full max-w-5xl mb-12 text-center relative z-10 flex flex-col items-center">
         <div class="inline-block glass-panel rounded-full px-5 py-1.5 mb-6">
-            <span class="text-yellow-400 text-xs sm:text-sm font-bold tracking-[0.2em]">GEN 3.4 // REFERENCE READY ✨</span>
+            <span class="text-yellow-400 text-xs sm:text-sm font-bold tracking-[0.2em]">GEN 3.4</span>
         </div>
         <h1 class="text-4xl sm:text-7xl font-extrabold mb-4 tracking-tight">Nano Banana <br class="sm:hidden"><span class="gradient-text">Prompt Chef</span></h1>
         
@@ -185,7 +222,7 @@
     </main>
 
     <footer class="mt-16 mb-4 text-center relative z-10 opacity-70 hover:opacity-100 transition-opacity">
-        <p class="text-xs sm:text-sm text-gray-400 font-medium tracking-wide">Crafted with <span class="text-red-500 animate-pulse">❤️</span> by <span class="text-yellow-500 font-bold">Om Ger</span> | <span class="text-blue-400 font-bold">Ai-Labs</span></p>
+        <p class="text-xs sm:text-sm text-gray-400 font-medium tracking-wide">© 2026 Crafted with <span class="text-red-500 animate-pulse">❤️</span> by <span class="text-yellow-500 font-bold">Om Ger</span> | <span class="text-blue-400 font-bold">Ai-Labs</span></p>
     </footer>
 
     <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 glass-panel bg-green-500/20 border-green-500/30 text-green-100 px-6 py-3 rounded-full shadow-2xl transition-all duration-500 translate-y-24 opacity-0 font-semibold z-50 backdrop-blur-xl flex items-center gap-2">
@@ -395,7 +432,50 @@
                 </div>
             `).join('');
         }
+
+        // --- FITUR LOGIN SEDERHANA ---
+        function attemptLogin() {
+            const u = document.getElementById('usernameInput').value;
+            const p = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('loginError');
+            const overlay = document.getElementById('loginOverlay');
+
+            // GANTI USERNAME DAN PASSWORD DI SINI
+            const validUser = "admprompt"; 
+            const validPass = "NBprompt34";
+
+            if (u === validUser && p === validPass) {
+                // Jika Benar:
+                // 1. Sembunyikan pesan error
+                errorMsg.classList.add('hidden');
+        
+                // 2. Beri efek visual login sukses
+                overlay.classList.add('opacity-0', 'pointer-events-none', 'scale-110');
+        
+                // 3. Simpan sesi (opsional, agar tidak login lagi saat refresh)
+                sessionStorage.setItem('isLoggedIn', 'true');
+            } else {
+                // Jika Salah:
+                errorMsg.classList.remove('hidden');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        // Cek Sesi saat reload (Opsional)
+        window.addEventListener('load', () => {
+            if(sessionStorage.getItem('isLoggedIn') === 'true') {
+            const overlay = document.getElementById('loginOverlay');
+            overlay.style.display = 'none';
+            }
+        });
+
+        // Fitur tekan Enter untuk login
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                attemptLogin();
+            }
+        });
     </script>
 </body>
 </html>
-
