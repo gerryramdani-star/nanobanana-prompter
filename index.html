@@ -222,7 +222,7 @@
     </main>
 
     <footer class="mt-16 mb-4 text-center relative z-10 opacity-70 hover:opacity-100 transition-opacity">
-        <p class="text-xs sm:text-sm text-gray-400 font-medium tracking-wide">© 2026 Crafted with <span class="text-red-500 animate-pulse">❤️</span> by <span class="text-yellow-500 font-bold">Om Ger</span> | <span class="text-blue-400 font-bold">Ai-Labs</span></p>
+        <p class="text-xs sm:text-sm text-gray-400 font-medium tracking-wide">© 2026 Crafted with <span class="text-red-500 animate-pulse">❤️</span> by <span class="text-yellow-500 font-bold">Om Ger</span> | <span class="text-blue-400 font-bold">Ai-Labs</span> All Rights Reserved.</p>
     </footer>
 
     <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 glass-panel bg-green-500/20 border-green-500/30 text-green-100 px-6 py-3 rounded-full shadow-2xl transition-all duration-500 translate-y-24 opacity-0 font-semibold z-50 backdrop-blur-xl flex items-center gap-2">
@@ -476,6 +476,18 @@
                 attemptLogin();
             }
         });
+
+        // --- FITUR LOGOUT (ADDED) ---
+        function logout() {
+            if(confirm('Yakin ingin keluar dari dapur chef?')) {
+                // 1. Hapus sesi
+                sessionStorage.removeItem('isLoggedIn');
+                
+                // 2. Refresh halaman untuk memunculkan kembali Login Overlay yang fresh
+                window.location.reload();
+            }
+        }
     </script>
 </body>
 </html>
+
